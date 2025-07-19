@@ -1,0 +1,20 @@
+2025-07-19 03:58:48,572 - INFO: Created user onealdebra with email michael89@gmail.com
+2025-07-19 03:58:49,213 - INFO: Created user natalie75 with email williamsclaire@gmail.com
+2025-07-19 03:58:50,036 - INFO: Created user oshaw with email allencampbell@gmail.com
+2025-07-19 03:58:50,762 - INFO: Created user crossmark with email cristina87@gmail.com
+2025-07-19 03:58:51,493 - INFO: Created user jonathan04 with email edward17@gmail.com
+2025-07-19 03:58:51,639 - ERROR: Handled known exception: Listing already booked for selected dates
+Traceback (most recent call last):
+  File "/home/enamyaovi/Alx_Pro_Dev/alx_travel_app_0x00/alx_travel_app/utils/decorators.py", line 14, in wrapper
+    return func(*args, **kwargs)
+  File "/home/enamyaovi/Alx_Pro_Dev/alx_travel_app_0x00/alx_travel_app/listings/management/commands/seed.py", line 106, in handle
+    booking = create_fake_booking(fake, customer, listing)
+  File "/home/enamyaovi/Alx_Pro_Dev/alx_travel_app_0x00/alx_travel_app/listings/management/commands/seed.py", line 60, in create_fake_booking
+    return Booking.objects.create(
+  File "/home/enamyaovi/Alx_Pro_Dev/aprodev/lib/python3.10/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/enamyaovi/Alx_Pro_Dev/aprodev/lib/python3.10/site-packages/django/db/models/query.py", line 663, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/enamyaovi/Alx_Pro_Dev/alx_travel_app_0x00/alx_travel_app/listings/models.py", line 153, in save
+    raise ValueError("Listing already booked for selected dates")
+ValueError: Listing already booked for selected dates
