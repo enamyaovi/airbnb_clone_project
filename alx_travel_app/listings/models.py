@@ -1,6 +1,5 @@
 from django.db import models
-import uuid
-from datetime import datetime
+import uuid, time
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
@@ -197,3 +196,92 @@ class Review(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+class Payment(models.Model):
+
+    class Currency(models.TextChoices):
+        # CEDIS = "GHC", _("GHANA CEDIS")
+        DOLLAR = "USD", _("UNITED STATES DOLLARS")
+        BIRR = "ETB", _("ETHIOPIAN BIRR")
+
+    class PaymentStatus(models.TextChoices):
+        PENDING = "PND", _("PAYMENT PENDING")
+        PROCESSING = "PCS", _("PROCESSING PAYMENT")
+        SUCCESS = "SCS", _("PAYMENT SUCCESSFUL")
+        CANCELLED = "CND", _("PAYMENT CANCELLED")
+        FAILED = "FLD", _("PAYMENT FAILED")
+        REFUNDED = "RFD", _("PAYMENT REFUNDED")
+
+    payment_id = models.UUIDField(
+        default=uuid.uuid4,
+        verbose_name='Payment ID',
+        primary_key=True,
+        editable=False
+    )
+
+    booking_reference = models.OneToOneField(
+        to=Booking,
+        on_delete=models.PROTECT,
+        related_name='booking_payment')
+    
+    payment_status = models.CharField(
+        max_length=3,
+        choices=PaymentStatus.choices,
+        null=False,
+        default=PaymentStatus.PENDING)
+    
+    amount = models.DecimalField(
+        null=False,
+        max_digits=10,
+        decimal_places=2)
+    
+    currency = models.CharField(
+        max_length=3,
+        choices=Currency.choices,
+        null=False,
+        default=Currency.BIRR
+    )
+    
+    transaction_id = models.CharField(
+        max_length=255,
+        verbose_name='ID returned by CHAPPA_PAY',
+        unique=True,
+        null=True,
+        db_index=True)
+    
+    checkout_url = models.URLField(
+        max_length=255,
+        verbose_name='CheckOut URL from CHAPPA',
+        null=True,
+        blank=True)
+    
+    raw_request = models.JSONField(
+        verbose_name= 'Outbound Payment Request Payload',
+        null=True,
+        blank=True)
+    
+    raw_response = models.JSONField(
+        verbose_name='Raw Response from Chappa',
+        null=True,
+        blank=True)
+    
+    @staticmethod
+    def generate_merchant_reference()->str:
+        return f"{uuid.uuid4().hex[:-8]}-{int(time.time())}"
+
+    merchant_reference = models.CharField(
+        max_length= 100,
+        unique=True,
+        db_index=True,
+        null=True,
+        blank=True
+    )
+
+    webhook_event_id = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        db_index=True)
+
+    def __str__(self) -> str:
+        return f"Booking: {self.booking_reference.pk}, Status: {self.payment_status}"

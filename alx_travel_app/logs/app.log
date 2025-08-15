@@ -18,3 +18,14 @@ Traceback (most recent call last):
   File "/home/enamyaovi/Alx_Pro_Dev/alx_travel_app_0x00/alx_travel_app/listings/models.py", line 153, in save
     raise ValueError("Listing already booked for selected dates")
 ValueError: Listing already booked for selected dates
+2025-08-15 10:27:26,093 - INFO: Created user zhatfield with email thart@gmail.com
+2025-08-15 10:27:26,714 - INFO: Created user yjohnston with email fnoble@gmail.com
+2025-08-15 10:27:27,345 - INFO: Created user toddpayne with email amygarcia@gmail.com
+2025-08-15 10:27:27,986 - INFO: Created user bradleyburke with email pwatkins@gmail.com
+2025-08-15 10:27:28,609 - INFO: Created user finleyclayton with email travisalexander@gmail.com
+2025-08-15 10:27:29,238 - INFO: Created user linda13 with email jordan56@gmail.com
+2025-08-15 10:27:29,836 - INFO: Created user polson with email amymiller@gmail.com
+2025-08-15 10:27:30,462 - INFO: Created user charleshoward with email daniel14@gmail.com
+2025-08-15 10:27:31,105 - INFO: Created user omcpherson with email peterskyle@gmail.com
+2025-08-15 10:27:31,835 - INFO: Created user ramirezzachary with email eric37@gmail.com
+2025-08-15 10:27:32,320 - INFO: Database seeded successfully.

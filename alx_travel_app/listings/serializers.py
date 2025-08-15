@@ -21,7 +21,7 @@ class BookingSerializer(serializers.HyperlinkedModelSerializer):
             'status',
             'listing'
         ]
-        read_only_fields = ['total_price_display']
+        read_only_fields = ['total_price_display', 'status']
 
     def get_total_price_display(self, obj: Booking) -> str:
         """
@@ -76,3 +76,36 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['url', 'user_id', 'username', 'email', 'listings']
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    """
+    Serializer for registering User instances   
+    """
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'password']
+        extra_kwargs = {
+            "password" : {
+                "write_only":True
+            }
+        }
+
+    def create(self, validated_data):
+        """
+        for creating a new user using validated data
+        """
+        username = validated_data.get('username', None)
+        email = validated_data.get('email', None)
+        password = validated_data.pop('password', None)
+
+        if not (username and email and password):
+            raise serializers.ValidationError(
+                f"You are missing some values")
+            #will find a way to retrieve which value(s) are empty
+
+        user = CustomUser.objects.create_user(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+    

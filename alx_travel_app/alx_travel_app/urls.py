@@ -8,7 +8,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="Alx Travel App API",
         default_version='v1',
-        description="An App for Sceduling Travel Options",
+        description="An App for Scheduling Travel Options",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="cephas.tay137@gmail.com"),
         license=openapi.License(name="BSD License"),
@@ -27,5 +27,5 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-    path('listings/', include('listings.urls')),
+    path('api/v1/', include('listings.urls')),
 ]

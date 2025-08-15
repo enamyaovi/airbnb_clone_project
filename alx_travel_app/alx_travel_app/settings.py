@@ -20,7 +20,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = [x for x in env.list('ALLOWED_HOSTS')] #type:ignore
+# ALLOWED_HOSTS = [x for x in env.list('ALLOWED_HOSTS')] #type:ignore
+
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = "listings.CustomUSer"
 
@@ -132,7 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 5,
@@ -186,3 +188,16 @@ if env("ENVIRONMENT").lower() == "PRODUCTION": #type:ignore
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
+
+
+#CHAPPA_PAY API SETTINGS
+PAYMENT_API_KEY=env('CHAPA_SECRET_KEY')
+PAYMENT_API_BASE_URL=env('CHAPA_API_BASE_URL')
+PAYMENT_VERIFY_URL=env('CHAPA_VERIFY_URL')
+PAYMENT_CANCEL_URL=''
+WEBHOOK_SECRET=env('WEBHOOK_SECRET_HASH')
+WEBHOOK_URL=env('WEBHOOK_URL')
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.ngrok-free.app',
+]
