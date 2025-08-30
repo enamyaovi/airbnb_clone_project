@@ -201,3 +201,16 @@ WEBHOOK_URL=env('WEBHOOK_URL')
 CSRF_TRUSTED_ORIGINS = [
     'https://*.ngrok-free.app',
 ]
+
+# Use Django's SMTP backend
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+# Default "from" email address
+DEFAULT_FROM_EMAIL = env('ADMIN_EMAIL')
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = env('ADMIN_EMAIL')
+EMAIL_HOST_PASSWORD = env('ADMIN_SECRET_PASS')

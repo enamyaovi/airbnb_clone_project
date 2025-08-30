@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import permissions, viewsets, status
 from rest_framework.decorators import action, api_view
 from listings.models import Booking, Listing, Review, Payment
+from listings.tasks import send_booking_confirmation_email
 from listings.serializers import UserSerializer, BookingSerializer, ListingSerializer, UserRegisterSerializer
 
 from listings.permissions import IsAdminOrAnonymous, IsAdminOrUserOwner, IsAdminOrBookingUser
@@ -51,11 +52,20 @@ class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+
     def perform_create(self, serializer):
         """
         Automatically set the booking's customer to the logged-in user.
         """
-        serializer.save(customer=self.request.user)
+        booking = serializer.save(customer=self.request.user)
+        
+        send_booking_confirmation_email.delay( # type: ignore
+            to_email=self.request.user.email, # type: ignore
+            booking_id=booking.id,
+            listing_title=booking.listing.title,
+            booking_date=str(booking.date),
+        )
 
     def get_queryset(self): # type: ignore
         if self.request.user.is_authenticated:
@@ -196,6 +206,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post', 'get'])
     def verify_payment(self, request, pk=None):
         pass
+
     # @action(detail=True, methods=['post'])
     # def initiate_payment(self, request, pk=None):
 # 
