@@ -28,7 +28,7 @@ urlpatterns = [
 
         # drf-yasg Swagger at root 
     path("", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
-    
+     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     # (optional) drf-yasg Redoc at /redoc
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
