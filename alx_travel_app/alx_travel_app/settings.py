@@ -22,7 +22,7 @@ DEBUG = env('DEBUG')
 
 # ALLOWED_HOSTS = [x for x in env.list('ALLOWED_HOSTS')] #type:ignore
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["your-app.onrender.com", "127.0.0.1"]
 
 AUTH_USER_MODEL = "listings.CustomUSer"
 
@@ -44,12 +44,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'rest_framework_simplejwt',
-    # 'django.contrib.staticfiles',
     'drf_yasg',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -123,7 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -146,6 +149,19 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'EXCEPTION_HANDLER': 'utils.exceptionhandler.customexceptionhandler',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'AirBnB Clone Project',
+    'DESCRIPTION': 'An App for Scheduling Travel Options',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    # OTHER SETTINGS
 }
 
 #swagger settings
@@ -175,7 +191,8 @@ SWAGGER_SETTINGS = {
 
 CORS_ALLOWED_ORIGINS = [x for x in env.list("CORS_ALLOWED_ORIGIN")] #type:ignore
 
-CELERY_BROKER_URL = env('BROKER_URL')
+CELERY_BROKER_URL = env("REDIS_URL")
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 
 if env("ENVIRONMENT").lower() == "PRODUCTION": #type:ignore
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') 

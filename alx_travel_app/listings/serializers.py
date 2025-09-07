@@ -108,4 +108,24 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
-    
+
+class InitiatePaymentRequestSerializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = serializers.CharField()
+
+class InitiatePaymentResponseSerializer(serializers.Serializer):
+    message = serializers.CharField()
+    payment_id = serializers.IntegerField(required=False)
+    status = serializers.CharField(required=False)
+
+class PaymentStatusSerializer(serializers.Serializer):
+    booking_status = serializers.CharField()
+    payment_status = serializers.CharField(allow_null=True)
+    checkout_url = serializers.URLField(allow_null=True)
+
+
+class PaymentResponseSerializer(serializers.Serializer):
+    msg = serializers.CharField()
+    checkout = serializers.URLField(required=False)
+    redirect_url = serializers.URLField(required=False)
+    status = serializers.CharField(required=False)

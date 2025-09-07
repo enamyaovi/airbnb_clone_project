@@ -1,10 +1,16 @@
 import os
 from celery import Celery
-from django.conf import settings
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'alx_travel_app.settings')
+# set the default Django settings module
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alx_travel_app.settings")
 
-app = Celery('alx_travel_app')
-app.config_from_object('django.conf:settings', namespace='CELERY')
+app = Celery("alx_travel_app")
+
+# load celery config from Django settings with `CELERY_` namespace
+app.config_from_object("django.conf:settings", namespace="CELERY")
+
+# optional: prevent crash on broker startup
 app.conf.broker_connection_retry_on_startup = True
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+
+# auto-discover tasks across all INSTALLED_APPS
+app.autodiscover_tasks()

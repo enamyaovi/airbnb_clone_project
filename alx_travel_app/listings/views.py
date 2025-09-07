@@ -3,7 +3,12 @@ from rest_framework import permissions, viewsets, status
 from rest_framework.decorators import action, api_view
 from listings.models import Booking, Listing, Review, Payment
 from listings.tasks import send_booking_confirmation_email
-from listings.serializers import UserSerializer, BookingSerializer, ListingSerializer, UserRegisterSerializer
+from listings.serializers import (
+    UserSerializer, BookingSerializer, ListingSerializer, 
+    UserRegisterSerializer, 
+    InitiatePaymentRequestSerializer, InitiatePaymentResponseSerializer,
+    PaymentResponseSerializer, PaymentStatusSerializer
+)
 
 from listings.permissions import IsAdminOrAnonymous, IsAdminOrUserOwner, IsAdminOrBookingUser
 
@@ -15,6 +20,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 import requests, json, hmac, hashlib
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponseNotAllowed
+
+# from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 
 User = get_user_model()
 
@@ -40,8 +48,6 @@ class UserViewSet(viewsets.ModelViewSet):
             return UserRegisterSerializer
         return super().get_serializer_class()
 
-    def destroy(self, request, *args, **kwargs):
-        return super().destroy(request, *args, **kwargs)
 
 class BookingViewSet(viewsets.ModelViewSet):
     """
@@ -116,6 +122,23 @@ class BookingViewSet(viewsets.ModelViewSet):
         return Response({"msg": "Payment re-initiated. Click Redirect Link to Pay", "redirect_url": payment.checkout_url}, status=status.HTTP_200_OK)
     
 
+    @extend_schema(
+        request=None,
+        responses={200: PaymentStatusSerializer},
+        methods=['GET'],
+        description="Retrieve booking and payment status for this booking."
+    )
+    @extend_schema(
+        request=InitiatePaymentRequestSerializer,
+        responses={
+            200: PaymentResponseSerializer,
+            202: OpenApiResponse(response=PaymentResponseSerializer, description="Booking confirmed"),
+            400: OpenApiResponse(response=PaymentResponseSerializer, description="Booking not pending or API error"),
+            424: OpenApiResponse(response=PaymentResponseSerializer, description="Payment failed or cancelled"),
+        },
+        methods=['POST'],
+        description="Initiate or re-initiate payment for this booking."
+    )
     @action(detail=True, methods=['post', 'get'])
     def initiate_payment(self, request, pk=None):
         

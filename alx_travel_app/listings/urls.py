@@ -5,6 +5,12 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+    SpectacularRedocView,
+)
+
 from listings import views
 
 router = routers.DefaultRouter()
@@ -19,4 +25,13 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('bookings/confirm/', views.confirm, name='confirm'),
     path('payments/webhook/', views.chapa_webhook, name='chappa-webhook'),
+
+    #api documentation using spectacular Schema
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path(
+        "schema/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
 ]

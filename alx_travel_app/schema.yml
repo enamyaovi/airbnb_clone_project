@@ -1,0 +1,1114 @@
+openapi: 3.0.3
+info:
+  title: AirBnB Clone Project
+  version: 1.0.0
+  description: An App for Scheduling Travel Options
+paths:
+  /api/v1/bookings/:
+    get:
+      operationId: bookings_list
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - bookings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBookingList'
+          description: ''
+    post:
+      operationId: bookings_create
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      tags:
+      - bookings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Booking'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+  /api/v1/bookings/{booking_id}/:
+    get:
+      operationId: bookings_retrieve
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - in: path
+        name: booking_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this booking.
+        required: true
+      tags:
+      - bookings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+    put:
+      operationId: bookings_update
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - in: path
+        name: booking_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this booking.
+        required: true
+      tags:
+      - bookings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Booking'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+    patch:
+      operationId: bookings_partial_update
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - in: path
+        name: booking_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this booking.
+        required: true
+      tags:
+      - bookings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBooking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBooking'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBooking'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+    delete:
+      operationId: bookings_destroy
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - in: path
+        name: booking_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this booking.
+        required: true
+      tags:
+      - bookings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/bookings/{booking_id}/initiate_payment/:
+    get:
+      operationId: bookings_initiate_payment_retrieve
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - in: path
+        name: booking_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this booking.
+        required: true
+      tags:
+      - bookings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+    post:
+      operationId: bookings_initiate_payment_create
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - in: path
+        name: booking_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this booking.
+        required: true
+      tags:
+      - bookings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Booking'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+  /api/v1/bookings/{booking_id}/verify_payment/:
+    get:
+      operationId: bookings_verify_payment_retrieve
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - in: path
+        name: booking_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this booking.
+        required: true
+      tags:
+      - bookings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+    post:
+      operationId: bookings_verify_payment_create
+      description: |-
+        Handles confirmed bookings.
+        Authenticated users can create; others can read.
+      parameters:
+      - in: path
+        name: booking_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this booking.
+        required: true
+      tags:
+      - bookings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Booking'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+  /api/v1/bookings/confirm/:
+    get:
+      operationId: bookings_confirm_retrieve
+      tags:
+      - bookings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/listings/:
+    get:
+      operationId: listings_list
+      description: Manages listings. Anyone can read; only authenticated users can
+        create/edit.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - listings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedListingList'
+          description: ''
+    post:
+      operationId: listings_create
+      description: Manages listings. Anyone can read; only authenticated users can
+        create/edit.
+      tags:
+      - listings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Listing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Listing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Listing'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+          description: ''
+  /api/v1/listings/{listing_id}/:
+    get:
+      operationId: listings_retrieve
+      description: Manages listings. Anyone can read; only authenticated users can
+        create/edit.
+      parameters:
+      - in: path
+        name: listing_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this listing.
+        required: true
+      tags:
+      - listings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+          description: ''
+    put:
+      operationId: listings_update
+      description: Manages listings. Anyone can read; only authenticated users can
+        create/edit.
+      parameters:
+      - in: path
+        name: listing_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this listing.
+        required: true
+      tags:
+      - listings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Listing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Listing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Listing'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+          description: ''
+    patch:
+      operationId: listings_partial_update
+      description: Manages listings. Anyone can read; only authenticated users can
+        create/edit.
+      parameters:
+      - in: path
+        name: listing_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this listing.
+        required: true
+      tags:
+      - listings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedListing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedListing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedListing'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+          description: ''
+    delete:
+      operationId: listings_destroy
+      description: Manages listings. Anyone can read; only authenticated users can
+        create/edit.
+      parameters:
+      - in: path
+        name: listing_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this listing.
+        required: true
+      tags:
+      - listings
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/payments/webhook/:
+    post:
+      operationId: payments_webhook_create
+      tags:
+      - payments
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/token/:
+    post:
+      operationId: token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/v1/token/refresh/:
+    post:
+      operationId: token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/v1/users/:
+    get:
+      operationId: users_list
+      description: |-
+        ViewSet for managing user accounts.
+        Only authenticated users can access this endpoint.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserList'
+          description: ''
+    post:
+      operationId: users_create
+      description: |-
+        ViewSet for managing user accounts.
+        Only authenticated users can access this endpoint.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegister'
+          description: ''
+  /api/v1/users/{user_id}/:
+    get:
+      operationId: users_retrieve
+      description: |-
+        ViewSet for managing user accounts.
+        Only authenticated users can access this endpoint.
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this custom user.
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: users_update
+      description: |-
+        ViewSet for managing user accounts.
+        Only authenticated users can access this endpoint.
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this custom user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: users_partial_update
+      description: |-
+        ViewSet for managing user accounts.
+        Only authenticated users can access this endpoint.
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this custom user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: users_destroy
+      description: |-
+        ViewSet for managing user accounts.
+        Only authenticated users can access this endpoint.
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this custom user.
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Booking:
+      type: object
+      description: |-
+        Handles serialization and validation for Booking objects.
+        Includes a computed field to return the human-readable price in cedis.
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        start_date:
+          type: string
+          format: date
+          title: Start Date of Booking
+        end_date:
+          type: string
+          format: date
+          title: End Date of Booking
+        total_price_display:
+          type: string
+          description: Return the total price in GH₵ from stored pesewa value.
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Status of Booking
+        listing:
+          type: string
+          format: uri
+      required:
+      - end_date
+      - listing
+      - start_date
+      - status
+      - total_price_display
+      - url
+    Listing:
+      type: object
+      description: Serializer for property listings. Host's username is included for
+        context.
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        host_username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          readOnly: true
+        name:
+          type: string
+          title: Listing Name
+          maxLength: 100
+        description:
+          type: string
+          title: Description of Property
+        price_per_night:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,2})?$
+          title: Price of Listing per Night
+      required:
+      - description
+      - host_username
+      - name
+      - price_per_night
+      - url
+    PaginatedBookingList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Booking'
+    PaginatedListingList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Listing'
+    PaginatedUserList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PatchedBooking:
+      type: object
+      description: |-
+        Handles serialization and validation for Booking objects.
+        Includes a computed field to return the human-readable price in cedis.
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        start_date:
+          type: string
+          format: date
+          title: Start Date of Booking
+        end_date:
+          type: string
+          format: date
+          title: End Date of Booking
+        total_price_display:
+          type: string
+          description: Return the total price in GH₵ from stored pesewa value.
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Status of Booking
+        listing:
+          type: string
+          format: uri
+    PatchedListing:
+      type: object
+      description: Serializer for property listings. Host's username is included for
+        context.
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        host_username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          readOnly: true
+        name:
+          type: string
+          title: Listing Name
+          maxLength: 100
+        description:
+          type: string
+          title: Description of Property
+        price_per_night:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,2})?$
+          title: Price of Listing per Night
+    PatchedUser:
+      type: object
+      description: Basic user serializer with listing links included.
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        user_id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        listings:
+          type: array
+          items:
+            type: string
+            format: uri
+          readOnly: true
+    StatusEnum:
+      enum:
+      - PND
+      - CFD
+      - CNC
+      type: string
+      description: |-
+        * `PND` - Pending
+        * `CFD` - Confirmed
+        * `CNC` - Cancelled
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    User:
+      type: object
+      description: Basic user serializer with listing links included.
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        user_id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        listings:
+          type: array
+          items:
+            type: string
+            format: uri
+          readOnly: true
+      required:
+      - listings
+      - url
+      - user_id
+      - username
+    UserRegister:
+      type: object
+      description: Serializer for registering User instances
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+      required:
+      - password
+      - username
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
