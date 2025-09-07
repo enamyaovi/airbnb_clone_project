@@ -22,7 +22,7 @@ DEBUG = env('DEBUG')
 
 # ALLOWED_HOSTS = [x for x in env.list('ALLOWED_HOSTS')] #type:ignore
 
-ALLOWED_HOSTS = ["127.0.0.1", "airbnb-clone-project-git-repo.onrender.com"]
+ALLOWED_HOSTS = ["airbnb-clone-project-git-repo.onrender.com"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://airbnb-clone-project-git-repo.onrender.com/",
