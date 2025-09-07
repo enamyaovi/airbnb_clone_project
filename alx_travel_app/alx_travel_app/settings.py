@@ -22,7 +22,12 @@ DEBUG = env('DEBUG')
 
 # ALLOWED_HOSTS = [x for x in env.list('ALLOWED_HOSTS')] #type:ignore
 
-ALLOWED_HOSTS = ["your-app.onrender.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "airbnb-clone-project-git-repo.onrender.com"]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://airbnb-clone-project-git-repo.onrender.com/",
+        "https://*.ngrok-free.app",
+]
 
 AUTH_USER_MODEL = "listings.CustomUSer"
 
@@ -214,10 +219,6 @@ PAYMENT_VERIFY_URL=env('CHAPA_VERIFY_URL')
 PAYMENT_CANCEL_URL=''
 WEBHOOK_SECRET=env('WEBHOOK_SECRET_HASH')
 WEBHOOK_URL=env('WEBHOOK_URL')
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://*.ngrok-free.app',
-]
 
 # Use Django's SMTP backend
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
